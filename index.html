@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💖 My Cute To-Do List 💖</title>
+  <style>
+    body {
+      background-color: #ffe6f2;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #ff66b2;
+      text-shadow: 2px 2px #ffcce0;
+      margin-bottom: 20px;
+    }
+
+    .todo-container {
+      background-color: #fff0f5;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 153, 204, 0.5);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    input, textarea {
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+      border: 2px solid #ff99cc;
+      border-radius: 10px;
+      font-size: 16px;
+      background-color: #fffafc;
+    }
+
+    button {
+      background-color: #ff80bf;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff4da6;
+    }
+
+    .todo-item {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 0;
+      box-shadow: 0 0 8px rgba(255, 153, 204, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .important {
+      background-color: #ffd6eb;
+      border: 2px solid #ff66b2;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .delete-btn {
+      background-color: #ff6699;
+    }
+
+    .edit-btn {
+      background-color: #ff99cc;
+    }
+
+    .highlight-btn {
+      background-color: #ffb3d9;
+    }
+
+    .complete-btn {
+      background-color: #c1ffc1;
+      color: #333;
+    }
+
+    .time {
+      font-size: 14px;
+      color: #cc6699;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌸 My Cute To-Do List 🌸</h1>
+  <div class="todo-container">
+    <input type="text" id="taskInput" placeholder="📝 Add a new task..." />
+    <input type="datetime-local" id="taskTime" />
+    <button onclick="addTask()">💖 Add Task</button>
+    <div id="todoList"></div>
+  </div>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const taskTime = document.getElementById("taskTime");
+      const text = taskInput.value.trim();
+      const time = taskTime.value;
+
+      if (!text) {
+        alert("🌷 Please enter a task!");
+        return;
+      }
+
+      const task = {
+        id: Date.now(),
+        text,
+        time,
+        important: false,
+        completed: false,
+      };
+
+      tasks.push(task);
+      saveTasks();
+      renderTasks();
+      scheduleNotification(task);
+
+      taskInput.value = "";
+      taskTime.value = "";
+    }
+
+    function renderTasks() {
+      const list = document.getElementById("todoList");
+      list.innerHTML = "";
+
+      tasks.forEach(task => {
+        const div = document.createElement("div");
+        div.className = "todo-item" 
+          + (task.important ? " important" : "") 
+          + (task.completed ? " completed" : "");
+        div.innerHTML = `
+          <div contenteditable="true" onblur="editTask(${task.id}, this.innerText)">
+            ${task.text}
+          </div>
+          ${task.time ? `<div class="time">⏰ ${new Date(task.time).toLocaleString()}</div>` : ""}
+          <div class="actions">
+            <button class="complete-btn" onclick="toggleComplete(${task.id})">✅ Complete</button>
+            <button class="highlight-btn" onclick="toggleImportant(${task.id})">💞 Highlight</button>
+            <button class="edit-btn" onclick="editNow(${task.id})">🖊 Edit</button>
+            <button class="delete-btn" onclick="deleteTask(${task.id})">🗑 Delete</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function editNow(id) {
+      const task = tasks.find(t => t.id === id);
+      const newText = prompt("🦋 Edit your task:", task.text);
+      if (newText !== null && newText.trim() !== "") {
+        task.text = newText.trim();
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function editTask(id, newText) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.text = newText.trim();
+        saveTasks();
+      }
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      saveTasks();
+      renderTasks();
+    }
+
+    function toggleImportant(id) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.important = !task.important;
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function toggleComplete(id) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.completed = !task.completed;
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function scheduleNotification(task) {
+      if (!("Notification" in window)) return;
+
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted" && task.time) {
+          const timeDiff = new Date(task.time).getTime() - new Date().getTime();
+          if (timeDiff > 0) {
+            setTimeout(() => {
+              new Notification("💖 Reminder!", {
+                body: `Don’t forget: ${task.text}`,
+                icon: "https://cdn-icons-png.flaticon.com/512/616/616408.png",
+              });
+            }, timeDiff);
+          }
+        }
+      });
+    }
+
+    // Load saved tasks
+    renderTasks();
+  </script>
+</body>
+</html>
