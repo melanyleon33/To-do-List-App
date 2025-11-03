@@ -1,163 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💖 My Cute To-Do List 💖</title>
-  <style>
-    body {
-      background-color: #ffe6f2;
-      font-family: "Poppins", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0;
-      padding: 30px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🌸 Pink Planner 2025–2026 🌸</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: #ffe6f2;
+    display: flex;
+    height: 100vh;
+    color: #ff4da6;
+  }
 
-    h1 {
-      color: #ff66b2;
-      text-shadow: 2px 2px #ffcce0;
-      margin-bottom: 20px;
-    }
+  /* Sidebar */
+  .sidebar {
+    width: 280px;
+    background-color: #fff0f5;
+    box-shadow: 2px 0 10px rgba(255, 153, 204, 0.4);
+    padding: 20px;
+    overflow-y: auto;
+  }
 
-    .todo-container {
-      background-color: #fff0f5;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255, 153, 204, 0.5);
-      width: 100%;
-      max-width: 500px;
-    }
+  .sidebar h2 {
+    text-align: center;
+    color: #ff66b2;
+  }
 
-    input, textarea {
-      width: 100%;
-      margin: 5px 0;
-      padding: 10px;
-      border: 2px solid #ff99cc;
-      border-radius: 10px;
-      font-size: 16px;
-      background-color: #fffafc;
-    }
+  .notification-list {
+    list-style: none;
+    padding: 0;
+  }
 
-    button {
-      background-color: #ff80bf;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s;
-    }
+  .notification-list li {
+    background: white;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(255, 153, 204, 0.3);
+    font-size: 14px;
+  }
 
-    button:hover {
-      background-color: #ff4da6;
-    }
+  /* Main content */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+  }
 
-    .todo-item {
-      background: white;
-      border-radius: 10px;
-      padding: 10px;
-      margin: 10px 0;
-      box-shadow: 0 0 8px rgba(255, 153, 204, 0.3);
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
+  h1 {
+    color: #ff66b2;
+    text-shadow: 2px 2px #ffcce0;
+    margin: 10px 0;
+  }
 
-    .important {
-      background-color: #ffd6eb;
-      border: 2px solid #ff66b2;
-    }
+  /* Calendar */
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    max-width: 700px;
+    margin: 10px 0;
+  }
 
-    .completed {
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
+  .day {
+    background: #fffafc;
+    border: 2px solid #ff99cc;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-    .actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+  .day:hover {
+    background-color: #ffd6eb;
+  }
 
-    .delete-btn {
-      background-color: #ff6699;
-    }
+  .selected {
+    background-color: #ffb3d9;
+    font-weight: bold;
+  }
 
-    .edit-btn {
-      background-color: #ff99cc;
-    }
+  /* To-Do Section */
+  .todo-container {
+    background-color: #fff0f5;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 153, 204, 0.5);
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+  }
 
-    .highlight-btn {
-      background-color: #ffb3d9;
-    }
+  input, textarea {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    border: 2px solid #ff99cc;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #fffafc;
+  }
 
-    .complete-btn {
-      background-color: #c1ffc1;
-      color: #333;
-    }
+  button {
+    background-color: #ff80bf;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
 
-    .time {
-      font-size: 14px;
-      color: #cc6699;
-    }
-  </style>
+  button:hover {
+    background-color: #ff4da6;
+  }
+
+  .todo-item {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow: 0 0 8px rgba(255, 153, 204, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .important {
+    background-color: #ffd6eb;
+    border: 2px solid #ff66b2;
+  }
+
+  .completed {
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .delete-btn {
+    background-color: #ff6699;
+  }
+
+  .edit-btn {
+    background-color: #ff99cc;
+  }
+
+  .highlight-btn {
+    background-color: #ffb3d9;
+  }
+
+  .complete-btn {
+    background-color: #c1ffc1;
+    color: #333;
+  }
+
+  .time {
+    font-size: 14px;
+    color: #cc6699;
+  }
+</style>
 </head>
 <body>
-  <h1>🌸 My Cute To-Do List 🌸</h1>
-  <div class="todo-container">
-    <input type="text" id="taskInput" placeholder="📝 Add a new task..." />
-    <input type="datetime-local" id="taskTime" />
-    <button onclick="addTask()">💖 Add Task</button>
-    <div id="todoList"></div>
+  <div class="sidebar">
+    <h2>🔔 Notifications</h2>
+    <ul class="notification-list" id="notificationList"></ul>
   </div>
 
-  <script>
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  <div class="main">
+    <h1>💖 Pink Planner 2025–2026 💖</h1>
+    <div id="calendarContainer"></div>
 
-    function saveTasks() {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
+    <div class="todo-container">
+      <h3 id="selectedDateDisplay">📅 Select a date to view tasks</h3>
+      <input type="text" id="taskInput" placeholder="📝 Add a new task..." />
+      <input type="datetime-local" id="taskTime" />
+      <button onclick="addTask()">💖 Add Task</button>
+      <div id="todoList"></div>
+    </div>
+  </div>
 
-    function addTask() {
-      const taskInput = document.getElementById("taskInput");
-      const taskTime = document.getElementById("taskTime");
-      const text = taskInput.value.trim();
-      const time = taskTime.value;
+<script>
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  let selectedDate = new Date().toISOString().split("T")[0];
 
-      if (!text) {
-        alert("🌷 Please enter a task!");
-        return;
-      }
+  // Save tasks to localStorage
+  function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
 
-      const task = {
-        id: Date.now(),
-        text,
-        time,
-        important: false,
-        completed: false,
+  // Generate a simple monthly calendar (2025–2026)
+  function renderCalendar(year = 2025, month = new Date().getMonth()) {
+    const container = document.getElementById("calendarContainer");
+    container.innerHTML = "";
+
+    const title = document.createElement("h2");
+    title.innerText = `📆 ${new Date(year, month).toLocaleString("default", { month: "long" })} ${year}`;
+    container.appendChild(title);
+
+    const calendar = document.createElement("div");
+    calendar.className = "calendar";
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      const dayElem = document.createElement("div");
+      dayElem.className = "day";
+      if (dateStr === selectedDate) dayElem.classList.add("selected");
+      dayElem.innerText = day;
+      dayElem.onclick = () => {
+        selectedDate = dateStr;
+        renderCalendar(year, month);
+        renderTasks();
       };
-
-      tasks.push(task);
-      saveTasks();
-      renderTasks();
-      scheduleNotification(task);
-
-      taskInput.value = "";
-      taskTime.value = "";
+      calendar.appendChild(dayElem);
     }
 
-    function renderTasks() {
-      const list = document.getElementById("todoList");
-      list.innerHTML = "";
+    // Navigation buttons
+    const nav = document.createElement("div");
+    nav.style.display = "flex";
+    nav.style.justifyContent = "space-between";
+    nav.style.margin = "10px 0";
+    nav.innerHTML = `
+      <button onclick="changeMonth(-1)">⬅️ Prev</button>
+      <button onclick="changeMonth(1)">➡️ Next</button>
+    `;
+    container.appendChild(nav);
+    container.appendChild(calendar);
+  }
 
-      tasks.forEach(task => {
+  let currentYear = 2025;
+  let currentMonth = new Date().getMonth();
+
+  function changeMonth(offset) {
+    currentMonth += offset;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    } else if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+    if (currentYear < 2025) currentYear = 2025;
+    if (currentYear > 2026) currentYear = 2026;
+    renderCalendar(currentYear, currentMonth);
+  }
+
+  // Add a new task
+  function addTask() {
+    const taskInput = document.getElementById("taskInput");
+    const taskTime = document.getElementById("taskTime");
+    const text = taskInput.value.trim();
+    const time = taskTime.value;
+
+    if (!text) {
+      alert("🌷 Please enter a task!");
+      return;
+    }
+
+    const task = {
+      id: Date.now(),
+      text,
+      time,
+      date: selectedDate,
+      important: false,
+      completed: false,
+    };
+
+    tasks.push(task);
+    saveTasks();
+    renderTasks();
+    scheduleNotification(task);
+    renderNotifications();
+
+    taskInput.value = "";
+    taskTime.value = "";
+  }
+
+  // Render tasks for selected date
+  function renderTasks() {
+    document.getElementById("selectedDateDisplay").innerText = `📅 Tasks for ${selectedDate}`;
+    const list = document.getElementById("todoList");
+    list.innerHTML = "";
+
+    tasks
+      .filter(t => t.date === selectedDate)
+      .forEach(task => {
         const div = document.createElement("div");
-        div.className = "todo-item" 
-          + (task.important ? " important" : "") 
-          + (task.completed ? " completed" : "");
+        div.className =
+          "todo-item" +
+          (task.important ? " important" : "") +
+          (task.completed ? " completed" : "");
         div.innerHTML = `
           <div contenteditable="true" onblur="editTask(${task.id}, this.innerText)">
             ${task.text}
@@ -172,70 +316,92 @@
         `;
         list.appendChild(div);
       });
-    }
+  }
 
-    function editNow(id) {
-      const task = tasks.find(t => t.id === id);
-      const newText = prompt("🦋 Edit your task:", task.text);
-      if (newText !== null && newText.trim() !== "") {
-        task.text = newText.trim();
-        saveTasks();
-        renderTasks();
-      }
-    }
-
-    function editTask(id, newText) {
-      const task = tasks.find(t => t.id === id);
-      if (task) {
-        task.text = newText.trim();
-        saveTasks();
-      }
-    }
-
-    function deleteTask(id) {
-      tasks = tasks.filter(t => t.id !== id);
+  // Edit task inline or via prompt
+  function editNow(id) {
+    const task = tasks.find(t => t.id === id);
+    const newText = prompt("🦋 Edit your task:", task.text);
+    if (newText !== null && newText.trim() !== "") {
+      task.text = newText.trim();
       saveTasks();
       renderTasks();
+      renderNotifications();
     }
+  }
 
-    function toggleImportant(id) {
-      const task = tasks.find(t => t.id === id);
-      if (task) {
-        task.important = !task.important;
-        saveTasks();
-        renderTasks();
-      }
+  function editTask(id, newText) {
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+      task.text = newText.trim();
+      saveTasks();
+      renderNotifications();
     }
+  }
 
-    function toggleComplete(id) {
-      const task = tasks.find(t => t.id === id);
-      if (task) {
-        task.completed = !task.completed;
-        saveTasks();
-        renderTasks();
-      }
-    }
-
-    function scheduleNotification(task) {
-      if (!("Notification" in window)) return;
-
-      Notification.requestPermission().then(permission => {
-        if (permission === "granted" && task.time) {
-          const timeDiff = new Date(task.time).getTime() - new Date().getTime();
-          if (timeDiff > 0) {
-            setTimeout(() => {
-              new Notification("💖 Reminder!", {
-                body: `Don’t forget: ${task.text}`,
-                icon: "https://cdn-icons-png.flaticon.com/512/616/616408.png",
-              });
-            }, timeDiff);
-          }
-        }
-      });
-    }
-
-    // Load saved tasks
+  // Delete, highlight, complete
+  function deleteTask(id) {
+    tasks = tasks.filter(t => t.id !== id);
+    saveTasks();
     renderTasks();
-  </script>
+    renderNotifications();
+  }
+
+  function toggleImportant(id) {
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+      task.important = !task.important;
+      saveTasks();
+      renderTasks();
+      renderNotifications();
+    }
+  }
+
+  function toggleComplete(id) {
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+      task.completed = !task.completed;
+      saveTasks();
+      renderTasks();
+      renderNotifications();
+    }
+  }
+
+  // Browser notification
+  function scheduleNotification(task) {
+    if (!("Notification" in window)) return;
+    Notification.requestPermission().then(permission => {
+      if (permission === "granted" && task.time) {
+        const timeDiff = new Date(task.time).getTime() - new Date().getTime();
+        if (timeDiff > 0) {
+          setTimeout(() => {
+            new Notification("💖 Reminder!", {
+              body: `Don't forget: ${task.text}`,
+              icon: "https://cdn-icons-png.flaticon.com/512/616/616408.png",
+            });
+          }, timeDiff);
+        }
+      }
+    });
+  }
+
+  // Sidebar notification list
+  function renderNotifications() {
+    const list = document.getElementById("notificationList");
+    list.innerHTML = "";
+    const futureTasks = tasks.filter(t => t.time && new Date(t.time) > new Date());
+    futureTasks.sort((a, b) => new Date(a.time) - new Date(b.time));
+    futureTasks.forEach(t => {
+      const li = document.createElement("li");
+      li.innerText = `⏰ ${new Date(t.time).toLocaleString()} – ${t.text}`;
+      list.appendChild(li);
+    });
+  }
+
+  // Initialize
+  renderCalendar();
+  renderTasks();
+  renderNotifications();
+</script>
 </body>
 </html>
